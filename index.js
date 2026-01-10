@@ -56,7 +56,7 @@ app.get('/message/:id', (req, res) => {
     return res.status(404).send('Message not found');
   }
 
-  res.render('message', { message: message });
+  res.render('message.ejs', { message: message });
 });
 
 const PORT = 8080;
