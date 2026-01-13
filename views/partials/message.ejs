@@ -1,0 +1,10 @@
+<div class="message">
+  <div class="message-head">
+    <span class="name"><%= message.name %></span>
+    <span class="timestamp"><%= message.added %></span>
+    <span class="details-link"
+      >(<a href="/message/<%= message.id %>">View</a>)</span
+    >
+  </div>
+  <p class="message-text"><%= message.text %></p>
+</div>

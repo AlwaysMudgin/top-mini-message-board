@@ -1,6 +1,6 @@
 const express = require('express');
-const { randomUUID } = require('node:crypto');
 const path = require('node:path');
+const controller = require('./controllers/controller');
 
 const app = express();
 
@@ -12,52 +12,11 @@ app.use(express.static(assetsPath));
 
 app.use(express.urlencoded({ extended: true }));
 
-const messages = [
-  {
-    text: 'Hi there!',
-    user: 'Amando',
-    added: new Date(),
-    id: randomUUID(),
-  },
-  {
-    text: 'Hello World!',
-    user: 'Charles',
-    added: new Date(),
-    id: randomUUID(),
-  },
-];
+app.get('/', controller.getMessages);
 
-app.get('/', (req, res) => {
-  res.render('index', { messages: messages });
-});
+app.post('/new', controller.insertMessage);
 
-app.get('/new', (req, res) => {
-  res.render('form');
-});
-
-app.post('/new', (req, res) => {
-  const { user, text } = req.body;
-
-  messages.push({
-    text: text,
-    user: user,
-    added: new Date(),
-    id: randomUUID(),
-  });
-
-  res.redirect('/');
-});
-
-app.get('/message/:id', (req, res) => {
-  const id = req.params.id;
-  const message = messages.find((msg) => msg.id === id);
-
-  if (!message) {
-    return res.status(404).send('Message not found');
-  }
-
-  res.render('message.ejs', { message: message });
-});
+app.get('/message/:id', controller.getMessageById);
 
 const PORT = 8080;
 app.listen(PORT, (error) => {
