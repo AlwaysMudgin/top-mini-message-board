@@ -7,7 +7,7 @@
     <%- include('partials/header.ejs') %>
     <main>
       <div class="messages">
-        <% messages.forEach((message) => { %>
+        <% if (messages) { %> <% messages.forEach((message) => { %>
         <div class="message">
           <div class="message-head">
             <span class="name"><%= message.name %></span>
@@ -18,7 +18,7 @@
           </div>
           <p class="message-text"><%= message.text %></p>
         </div>
-        <% }) %>
+        <% }) %> <% } %>
       </div>
       <%- include('partials/newMessageForm.ejs') %>
     </main>
